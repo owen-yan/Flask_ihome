@@ -4,6 +4,7 @@ import redis
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 
 
 
@@ -32,6 +33,12 @@ redis_store = redis.StrictRedis(host=Config.REDIS_HOST, port=Config.REDIS_PORT)
 
 # 创建脚本管理器
 manager = Manager(app)
+
+# 迁移时，app和db建立关联
+Migrate(app, db)
+
+# 将数据库迁移的脚本，命令添加到脚本管理器对象中
+manager.add_command('db',MigrateCommand)
 
 
 @app.route('/')
