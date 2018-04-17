@@ -3,6 +3,7 @@
 import redis
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask_script import Manager
 
 
 
@@ -29,6 +30,9 @@ db = SQLAlchemy(app)
 
 redis_store = redis.StrictRedis(host=Config.REDIS_HOST, port=Config.REDIS_PORT)
 
+# 创建脚本管理器
+manager = Manager(app)
+
 
 @app.route('/')
 def index():
@@ -38,4 +42,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run( )
+    manager.run( )
