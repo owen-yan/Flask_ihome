@@ -22,3 +22,20 @@ class Config(object):
     SESSION_REDIS = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT)  # 使用 redis 的实例
     SESSION_USE_SIGNER = True
     PERMANENT_SESSION_LIFETIME = 86400  # session 的有效期，单位是秒
+
+class DevelopementConfig(Config):
+    """开发模式下的配置"""
+    DEBUG = True
+
+
+class ProductionConfig(Config):
+    """生产环境下的配置"""
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@127.0.0.1:3306/ihome_Protection"
+    PERMANENT_SESSION_LIFETIME = 60*60*24  # 有效时间一天
+
+
+class UnitTest(Config):
+    """测试环境下的配置"""
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = "mysql://root:mysql@127.0.0.1:3306/ihome_UnitTest"
